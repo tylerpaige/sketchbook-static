@@ -81,6 +81,19 @@ module.exports = {
             loader : 'postcss-loader'
           }
         ]
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            query: {
+              name: '[name].[ext]',
+              publicPath: '',
+              emitFile: true
+            }
+          }
+        ]
       }
     ]
   },
