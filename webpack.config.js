@@ -1,5 +1,6 @@
 const routes = require('./routes.js');
 const path = require('path');
+const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const entry = routes.reduce((acc, { name, js }) => {
@@ -8,10 +9,15 @@ const entry = routes.reduce((acc, { name, js }) => {
 }, {});
 
 const htmls = routes.map(route => {
+  const data = route.data
+    ? JSON.parse(fs.readFileSync(path.resolve(__dirname, route.data), 'utf8'))
+    : {};
+  console.log(route.name, data);
   return new HtmlWebpackPlugin({
     filename : route.path,
     template : route.template,
-    chunks : [route.name]
+    chunks : [route.name],
+    data
   });
 });
 htmls.push(new HtmlWebpackPlugin({
