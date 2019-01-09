@@ -1,9 +1,12 @@
 <!doctype html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="{{ cssURL }}"/>
   </head>
   <body>
-    <script src="{{ jsURL }}"></script>
+    {{#each htmlWebpackPlugin.options.routes}}
+      <li>
+        <a href="{{path}}.html">{{name}}</a>
+      </li>
+    {{/each}}
   </body>
 </html>

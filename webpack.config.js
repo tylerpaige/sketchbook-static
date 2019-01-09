@@ -9,14 +9,17 @@ const entry = routes.reduce((acc, { name, js }) => {
 
 const htmls = routes.map(route => {
   return new HtmlWebpackPlugin({
-    filename : `${route.name}.html`,
+    filename : route.path,
     template : route.template,
-    chunks : [route.name],
-    options : {
-      jsURL : `foo.js`,
-    }
+    chunks : [route.name]
   });
 });
+htmls.push(new HtmlWebpackPlugin({
+  filename : 'index.html',
+  template : path.resolve(__dirname, './src/components/index.hbs'),
+  inject : false,
+  routes
+}));
 
 module.exports = {
   entry : entry,
@@ -41,6 +44,10 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.hbs$/,
+        loader: "handlebars-loader"
       },
       {
         test: /\.s?css$/,
@@ -70,5 +77,10 @@ module.exports = {
   devtool : 'source-map',
   plugins : [
     ...htmls
-  ]
+  ],
+  devServer : {
+    contentBase : path.join(__dirname, 'dist'),
+    compress : true,
+    historyApiFallback : true
+  }
 };
