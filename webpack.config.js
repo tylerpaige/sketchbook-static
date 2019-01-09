@@ -12,7 +12,6 @@ const htmls = routes.map(route => {
   const data = route.data
     ? JSON.parse(fs.readFileSync(path.resolve(__dirname, route.data), 'utf8'))
     : {};
-  console.log(route.name, data);
   return new HtmlWebpackPlugin({
     filename : route.path,
     template : route.template,
@@ -53,7 +52,12 @@ module.exports = {
       },
       {
         test: /\.hbs$/,
-        loader: "handlebars-loader"
+        loader: "handlebars-loader",
+        query : {
+          helperDirs : [
+            __dirname + '/src/components/helpers'
+          ]
+        }
       },
       {
         test: /\.s?css$/,

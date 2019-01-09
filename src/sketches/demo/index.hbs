@@ -1,11 +1,11 @@
+{{var "data" htmlWebpackPlugin.options.data}}
 <!doctype html>
 <html>
   <head>
   </head>
   <body>
     <h1>Hello world. This is a demo.</h1>
-
-    {{#each htmlWebpackPlugin.options.data.foo}}
+    {{#each data.foo}}
       <li>{{.}}</li>
     {{/each}}
   </body>
