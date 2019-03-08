@@ -4,6 +4,7 @@ const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+// Multiple entry points for outputting several JS files
 const entry = routes.reduce((acc, { name, js }) => {
   acc[name] = path.resolve(__dirname, js);
   return acc;
@@ -21,6 +22,8 @@ const htmls = routes.map(route => {
     data
   });
 });
+
+// Create an index page, too, with links to all the routes
 htmls.push(
   new HtmlWebpackPlugin({
     filename: 'index.html',
@@ -31,16 +34,6 @@ htmls.push(
 );
 
 // Create configuration of all image directories to copy
-// const imgs = routes.reduce((acc, { img }) => {
-//   if (img) {
-//     acc.push({
-//       from: img,
-//       to: './'
-//     });
-//   }
-
-//   return acc;
-// }, []);
 const imgs = routes.reduce((acc, r) => acc.concat(r.img || []), [])
 
 module.exports = {
@@ -60,7 +53,7 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: [['@babel/preset-env']]
+              presets: ['@babel/preset-env']
             }
           }
         ]
@@ -84,7 +77,7 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              modules: true
+              modules: false
             }
           },
           {
