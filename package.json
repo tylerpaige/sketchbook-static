@@ -26,5 +26,8 @@
     "build": "webpack"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "copy-webpack-plugin": "^5.0.0"
+  }
 }
